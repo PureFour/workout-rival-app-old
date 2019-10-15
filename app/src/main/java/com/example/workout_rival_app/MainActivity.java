@@ -1,21 +1,20 @@
 package com.example.workout_rival_app;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+
 
 public class MainActivity extends AppCompatActivity {
 	private static final String SIMPLE_GET_URL = "http://192.168.0.101:8080/workoutRival"; //hardcoded my IP
@@ -25,18 +24,17 @@ public class MainActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		Toolbar toolbar = findViewById(R.id.toolbar);
-		setSupportActionBar(toolbar);
-		toolbar.setBackgroundColor(Color.RED);
 
-		FloatingActionButton fab = findViewById(R.id.fab);
-		fab.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Snackbar.make(view, getSimpleRequest(), Snackbar.LENGTH_LONG)
-					.setAction("Action", null).show();
-			}
-		});
+		Button loginButton = findViewById(R.id.login_button);
+		loginButton.setOnClickListener(
+				new View.OnClickListener()
+				{
+					public void onClick(View view)
+					{
+						Log.d("login", ((EditText) findViewById(R.id.login_field)).getText().toString());
+						Log.d("password", ((EditText) findViewById(R.id.login_field)).getText().toString());
+					}
+				});
 	}
 
 	@Override

@@ -18,5 +18,7 @@
     <string name="title_activity_welcome_screen">WelcomeScreen</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="button">Start</string>
+    <string name="login_button">LOGIN</string>
+    <string name="login_text"></string>
+    <string name="password_text"></string>
 </resources>

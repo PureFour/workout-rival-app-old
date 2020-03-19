@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- MAIN -->
+    <style name="MainText" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="autoSizeMaxTextSize">@dimen/font_normal</item>
+    </style>
+
+    <style name="MainTextPrimary" parent="MainText">
+        <item name="android:textColor">@color/brand_text_primary</item>
+    </style>
+
+    <style name="TextLargePrimary" parent="MainTextPrimary">
+        <item name="android:textSize">@dimen/font_large</item>
+    </style>
+
+    <style name="TextBoldLargePrimary" parent="TextLargePrimary">
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>

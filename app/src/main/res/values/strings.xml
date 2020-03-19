@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">WorkoutRival</string>
+    <string name="app_slogan">Get your ass up!</string>
+    <string name="log_in">Log In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+
+
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="text_info">Info</string>
+    <string name="text_yes">yes</string>
+    <string name="text_error">Error</string>
+    <string name="text_success">Success</string>
+    <string name="text_ok">OK</string>
+    <string name="text_cancel">Cancel</string>
+
 </resources>

@@ -1,11 +1,36 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MainBackground">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="AuthActivityTheme" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="splash_screen_background">@style/MainBackground</item>
+    </style>
+
+    <style name="MainDialogStyle" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="materialAlertDialogTitleTextStyle">@style/MainDialogTitleTextColor</item>
+        <item name="buttonBarPositiveButtonStyle">@style/MainDialogButtonTextColor</item>
+        <item name="buttonBarNegativeButtonStyle">@style/MainDialogButtonTextColor</item>
+    </style>
+
+    <style name="MainDialogTitleTextColor" parent="MaterialAlertDialog.MaterialComponents.Title.Text.CenterStacked">
+        <item name="android:textColor">@color/red</item>
+    </style>
+
+    <style name="MainDialogButtonTextColor" parent="@style/Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/red</item>
+    </style>
 </resources>

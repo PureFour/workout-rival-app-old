@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.util.Log
 import androidx.lifecycle.LiveData
+import com.ruczajsoftware.workoutrival.data.model.LoginRequest
 import com.ruczajsoftware.workoutrival.data.model.RegisterRequest
 import com.ruczajsoftware.workoutrival.data.network.ServicesApi
 import com.ruczajsoftware.workoutrival.data.network.util.ApiSuccessResponse
@@ -42,9 +43,12 @@ class AuthRepositoryImpl(
         return false
     }
 
-    override fun attemptLogin(email: String, password: String): LiveData<DataState<AuthViewState>> {
+    override fun attemptLogin(
+        username: String,
+        password: String
+    ): LiveData<DataState<AuthViewState>> {
 
-        val loginFieldErrors = LoginFields(email, password).isValidForLogin()
+        val loginFieldErrors = LoginFields(username, password).isValidForLogin()
         if (!loginFieldErrors.equals(LoginFields.LoginError.none())) {
             return returnErrorResponse(loginFieldErrors, ResponseType.Dialog())
         }
@@ -84,7 +88,7 @@ class AuthRepositoryImpl(
             }
 
             override fun createCall(): LiveData<GenericApiResponse<Boolean>> {
-                return servicesApi.login(email, password)
+                return servicesApi.login(LoginRequest(usermname = username, password = password))
             }
 
             override fun setJob(job: Job) {

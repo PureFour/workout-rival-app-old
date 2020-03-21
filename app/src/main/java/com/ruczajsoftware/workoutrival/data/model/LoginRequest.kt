@@ -2,11 +2,9 @@ package com.ruczajsoftware.workoutrival.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class RegisterRequest(
-    @SerializedName("email")
-    val email: String,
+data class LoginRequest(
     @SerializedName("username")
-    val username: String,
+    val usermname: String,
     @SerializedName("password")
     val password: String
 )

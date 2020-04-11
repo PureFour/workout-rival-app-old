@@ -5,33 +5,35 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.ruczajsoftware.workoutrival.R
-import com.ruczajsoftware.workoutrival.internal.viewModelFragment
+import com.ruczajsoftware.workoutrival.internal.viewModel
 import com.ruczajsoftware.workoutrival.ui.auth.state.AuthStateEvent.LoginAttemptEvent
 import com.ruczajsoftware.workoutrival.ui.auth.state.LoginFields
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 
-/**
- * A simple [Fragment] subclass.
- */
+
 class LoginFragment() : Fragment(R.layout.fragment_login), KodeinAware {
 
     override val kodein by closestKodein()
 
-    private val viewModel: AuthViewModel by viewModelFragment()
+    private val viewModel: AuthViewModel by viewModel()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.cancelActiveJobs()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeObservers()
         setupListeners()
-
     }
 
     private fun setupListeners() {
         loginButton.setOnClickListener { login() }
         registerButton.setOnClickListener { register() }
+        forgotPassword.setOnClickListener { forgotPassword() }
     }
 
     private fun register() {
@@ -39,20 +41,22 @@ class LoginFragment() : Fragment(R.layout.fragment_login), KodeinAware {
             ?.replace(
                 R.id.fragment_container,
                 RegisterFragment()
-            )?.commit()
-        subscribeObservers()
+            )?.addToBackStack("Register")?.commit()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.cancelActiveJobs()
+    private fun forgotPassword() {
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.replace(
+                R.id.fragment_container,
+                ForgotPasswordFragment()
+            )?.addToBackStack("ForgotPassword")?.commit()
     }
 
     fun subscribeObservers() {
         viewModel.viewState.observe(viewLifecycleOwner, Observer {
             it.loginFields?.let {
-                it.login_email?.let { inputLogin.setText(it) }
-                it.login_password?.let { inputPassword.setText(it) }
+                it.loginEmail?.let { inputLogin.setText(it) }
+                it.loginPassword?.let { inputPassword.setText(it) }
             }
         })
     }

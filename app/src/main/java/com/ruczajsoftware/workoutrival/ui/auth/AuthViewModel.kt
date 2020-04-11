@@ -2,12 +2,10 @@ package com.ruczajsoftware.workoutrival.ui.auth
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import com.ruczajsoftware.workoutrival.data.db.entity.AuthToken
 import com.ruczajsoftware.workoutrival.data.repository.auth.AuthRepository
-import com.ruczajsoftware.workoutrival.ui.auth.state.AuthStateEvent
+import com.ruczajsoftware.workoutrival.ui.auth.state.*
 import com.ruczajsoftware.workoutrival.ui.auth.state.AuthStateEvent.*
-import com.ruczajsoftware.workoutrival.ui.auth.state.AuthViewState
-import com.ruczajsoftware.workoutrival.ui.auth.state.LoginFields
-import com.ruczajsoftware.workoutrival.ui.auth.state.RegistrationFields
 import com.ruczajsoftware.workoutrival.util.DataState
 import com.ruczajsoftware.workoutrival.util.Loading
 import com.ruczajsoftware.workoutrival.util.viewmodel.BaseViewModel
@@ -31,6 +29,23 @@ class AuthViewModel(private val authRepository: AuthRepository) :
                     stateEvent.username,
                     stateEvent.password,
                     stateEvent.confirm_password
+                )
+            }
+
+            is CheckPreviousAuthEvent -> {
+                return authRepository.checkPreviousAuthUser()
+            }
+
+            is RequestNewPinEvent -> {
+                return authRepository.attemptRequestNewPin(stateEvent.email)
+            }
+
+            is UpdatePasswordEvent -> {
+                return authRepository.attemptUpdatePassword(
+                    stateEvent.email,
+                    stateEvent.newPassword,
+                    stateEvent.confirmPassword,
+                    stateEvent.pin
                 )
             }
 
@@ -70,7 +85,24 @@ class AuthViewModel(private val authRepository: AuthRepository) :
         setViewState(update)
     }
 
-    fun setAuthToken(authToken: Boolean) {
+    fun setEmailOnForgotPasswordFragment(email: String) {
+        val update = getCurrentViewStateOrNew()
+        if (update.forgotPasswordEmail == email)
+            return
+        update.forgotPasswordEmail = email
+        setViewState(update)
+    }
+
+    fun setUpdatePasswordFields(passwordFields: UpdatePasswordFields) {
+        val update = getCurrentViewStateOrNew()
+        if (update.updatePasswordFields == passwordFields) {
+            return
+        }
+        update.updatePasswordFields = passwordFields
+        setViewState(update)
+    }
+
+    fun setAuthToken(authToken: AuthToken) {
         val update = getCurrentViewStateOrNew()
         if (update.authToken == authToken) {
             return
@@ -85,7 +117,7 @@ class AuthViewModel(private val authRepository: AuthRepository) :
     }
 
     fun handlePendingData() {
-        setStateEvent(None())
+        setStateEvent(None)
     }
 
     override fun onCleared() {

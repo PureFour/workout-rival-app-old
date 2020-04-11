@@ -18,15 +18,12 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-
+            android:focusable="false"
             android:id="@+id/inputLoginLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/MainEditTextLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/login"
-            app:boxStrokeColor="@color/red"
-            app:hintTextColor="@color/red"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -41,12 +38,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputPasswordLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/MainEditTextLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
-            app:boxStrokeColor="@color/red"
-            app:hintTextColor="@color/red"
             app:layout_constraintTop_toBottomOf="@+id/inputLoginLayout">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -55,7 +50,6 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:textCursorDrawable="@drawable/cursor_color" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -77,7 +71,7 @@
 
     <Button
         android:id="@+id/registerButton"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        style="@style/MainOutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/spacing_normal"
@@ -89,5 +83,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:padding="@dimen/spacing_large_half"
+        android:id="@+id/forgotPassword"
+        android:text="@string/forgot_password"
+        android:layout_marginTop="@dimen/spacing_large_half"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

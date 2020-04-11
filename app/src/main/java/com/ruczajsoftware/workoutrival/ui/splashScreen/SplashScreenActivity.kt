@@ -5,8 +5,8 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import com.ruczajsoftware.workoutrival.R
-import com.ruczajsoftware.workoutrival.data.model.ServerStatus
-import com.ruczajsoftware.workoutrival.internal.viewModelActivity
+import com.ruczajsoftware.workoutrival.data.servicesModel.ServerStatus
+import com.ruczajsoftware.workoutrival.internal.viewModel
 import com.ruczajsoftware.workoutrival.ui.auth.AuthActivity
 import com.ruczajsoftware.workoutrival.ui.splashScreen.state.SplashScreenStateEvent.CheckStatus
 import com.ruczajsoftware.workoutrival.util.base.BaseActivity
@@ -16,7 +16,7 @@ class SplashScreenActivity() : BaseActivity(), KodeinAware {
 
     override val contentViewLayout: Int = R.layout.splash_screen_activity
 
-    private val viewModel: SplashScreenViewModel by viewModelActivity()
+    private val viewModel: SplashScreenViewModel by viewModel()
 
     companion object {
         private const val SERVER_STATUS = "UP"
@@ -63,6 +63,6 @@ class SplashScreenActivity() : BaseActivity(), KodeinAware {
         }
     }
 
-    override fun displayProgressBar(bool: Boolean) {}
+    override fun displayProgressBar(isVisible: Boolean) {}
 
 }

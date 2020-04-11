@@ -2,15 +2,13 @@ package com.ruczajsoftware.workoutrival
 
 import android.app.Application
 import androidx.lifecycle.ViewModelProvider
-import com.ruczajsoftware.workoutrival.data.network.networkController.ConnectivityInterceptor
-import com.ruczajsoftware.workoutrival.data.network.networkController.ConnectivityInterceptorImpl
+import com.ruczajsoftware.workoutrival.data.db.AppDatabase
 import com.ruczajsoftware.workoutrival.data.network.networkController.NetworkController
 import com.ruczajsoftware.workoutrival.data.repository.auth.AuthRepository
 import com.ruczajsoftware.workoutrival.data.repository.auth.AuthRepositoryImpl
 import com.ruczajsoftware.workoutrival.data.repository.splashScreen.SplashScreenRepository
 import com.ruczajsoftware.workoutrival.data.repository.splashScreen.SplashScreenRepositoryImpl
 import com.ruczajsoftware.workoutrival.session.SessionManager
-import com.ruczajsoftware.workoutrival.session.SessionManagerImpl
 import com.ruczajsoftware.workoutrival.util.viewmodel.ViewModelFactory
 import com.ruczajsoftware.workoutrival.util.viewmodel.viewModelModule
 import org.kodein.di.Kodein
@@ -26,7 +24,10 @@ class WorkoutRivalApplication : Application(), KodeinAware {
     override val kodein: Kodein = Kodein {
         import(androidXModule(this@WorkoutRivalApplication))
         import(viewModelModule)
-        bind<ConnectivityInterceptor>() with singleton { ConnectivityInterceptorImpl(instance()) }
+        bind() from singleton { AppDatabase(instance()) }
+        bind() from singleton { SessionManager(instance()) }
+
+        bind() from singleton { instance<AppDatabase>().getAuthTokenDao() }
         bind() from singleton { NetworkController() }
         bind<SplashScreenRepository>() with singleton {
             SplashScreenRepositoryImpl(
@@ -34,7 +35,6 @@ class WorkoutRivalApplication : Application(), KodeinAware {
                 instance()
             )
         }
-        bind<SessionManager>() with singleton { SessionManagerImpl() }
         bind<AuthRepository>() with singleton {
             AuthRepositoryImpl(
                 instance(),
@@ -44,6 +44,4 @@ class WorkoutRivalApplication : Application(), KodeinAware {
         }
         bind<ViewModelProvider.Factory>() with singleton { ViewModelFactory(kodein.direct) }
     }
-
-
 }

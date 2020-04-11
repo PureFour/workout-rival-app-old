@@ -14,6 +14,18 @@ sealed class AuthStateEvent {
         val confirm_password: String
     ) : AuthStateEvent()
 
+    data class RequestNewPinEvent(
+        val email: String
+    ) : AuthStateEvent()
 
-    class None : AuthStateEvent()
+    data class UpdatePasswordEvent(
+        val email: String,
+        val newPassword: String,
+        val confirmPassword: String,
+        val pin: String
+    ) : AuthStateEvent()
+
+    object CheckPreviousAuthEvent : AuthStateEvent()
+
+    object None : AuthStateEvent()
 }

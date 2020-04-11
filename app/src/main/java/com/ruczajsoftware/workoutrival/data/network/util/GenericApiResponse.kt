@@ -8,7 +8,6 @@ import com.ruczajsoftware.workoutrival.util.ErrorHandling.Companion.ERROR_UNKNOW
 import com.ruczajsoftware.workoutrival.util.ErrorHandling.Companion.FAILED_TO_CONNECT_TO_SERVER
 import retrofit2.Response
 
-@Suppress("unused") // T is used in extending classes
 sealed class GenericApiResponse<T> {
 
     companion object {
@@ -38,7 +37,7 @@ sealed class GenericApiResponse<T> {
             return when (response.code()) {
                 in 200..300 -> if (body != null) ApiSuccessResponse(
                     body = body
-                ) else ApiEmptyResponse()
+                ) else ApiSuccessResponse()
                 401 -> ApiErrorResponse(
                     ERROR_401
                 )
@@ -59,6 +58,8 @@ sealed class GenericApiResponse<T> {
 
 class ApiEmptyResponse<T> : GenericApiResponse<T>()
 
-data class ApiSuccessResponse<T>(val body: T) : GenericApiResponse<T>() {}
+data class ApiSuccessResponse<T>(val body: T?) : GenericApiResponse<T>() {
+    constructor() : this(null)
+}
 
 data class ApiErrorResponse<T>(val errorMessage: String) : GenericApiResponse<T>()

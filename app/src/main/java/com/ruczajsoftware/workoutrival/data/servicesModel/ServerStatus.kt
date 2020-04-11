@@ -1,4 +1,4 @@
-package com.ruczajsoftware.workoutrival.data.model
+package com.ruczajsoftware.workoutrival.data.servicesModel
 
 import com.google.gson.annotations.SerializedName
 

@@ -11,8 +11,8 @@ abstract class BaseViewModel<StateEvent, ViewState> : ViewModel() {
 
     val TAG: String = "AppDebug"
 
-    protected val _stateEvent: MutableLiveData<StateEvent> = MutableLiveData()
-    protected val _viewState: MutableLiveData<ViewState> = MutableLiveData()
+    private val _stateEvent: MutableLiveData<StateEvent> = MutableLiveData()
+    private val _viewState: MutableLiveData<ViewState> = MutableLiveData()
 
     val viewState: LiveData<ViewState>
         get() = _viewState
@@ -29,11 +29,9 @@ abstract class BaseViewModel<StateEvent, ViewState> : ViewModel() {
     }
 
     fun getCurrentViewStateOrNew(): ViewState {
-        val value = viewState.value?.let {
-            it
-        } ?: initNewViewState()
-        return value
+        return if (viewState.value != null) viewState.value!! else initNewViewState()
     }
+
 
     fun setViewState(viewState: ViewState) {
         _viewState.value = viewState

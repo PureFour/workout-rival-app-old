@@ -11,11 +11,11 @@ import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 
 
-inline fun <reified VM : ViewModel, T> T.viewModelFragment(): Lazy<VM> where T : KodeinAware, T : Fragment {
+inline fun <reified VM : ViewModel, T> T.viewModel(): Lazy<VM> where T : KodeinAware, T : Fragment {
     return lazy { ViewModelProvider(this, direct.instance()).get(VM::class.java) }
 }
 
-inline fun <reified VM : ViewModel, T> T.viewModelActivity(): Lazy<VM> where T : KodeinAware, T : AppCompatActivity {
+inline fun <reified VM : ViewModel, T> T.viewModel(): Lazy<VM> where T : KodeinAware, T : AppCompatActivity {
     return lazy { ViewModelProvider(this, direct.instance()).get(VM::class.java) }
 }
 

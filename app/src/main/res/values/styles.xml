@@ -20,6 +20,15 @@
         <item name="splash_screen_background">@style/MainBackground</item>
     </style>
 
+    <style name="MainEditTextLayoutStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/red</item>
+        <item name="hintTextColor">@color/red</item>
+    </style>
+
+    <style name="MainOutlinedButton" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="rippleColor">@color/redSemiTransparent</item>
+    </style>
+
     <style name="MainDialogStyle" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="materialAlertDialogTitleTextStyle">@style/MainDialogTitleTextColor</item>
         <item name="buttonBarPositiveButtonStyle">@style/MainDialogButtonTextColor</item>

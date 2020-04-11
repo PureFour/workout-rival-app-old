@@ -7,12 +7,9 @@ import com.ruczajsoftware.workoutrival.data.network.util.ApiEmptyResponse
 import com.ruczajsoftware.workoutrival.data.network.util.ApiErrorResponse
 import com.ruczajsoftware.workoutrival.data.network.util.ApiSuccessResponse
 import com.ruczajsoftware.workoutrival.data.network.util.GenericApiResponse
-import com.ruczajsoftware.workoutrival.util.DataState
-import com.ruczajsoftware.workoutrival.util.ErrorHandling
+import com.ruczajsoftware.workoutrival.util.*
 import com.ruczajsoftware.workoutrival.util.ErrorHandling.Companion.ERROR_CHECK_NETWORK_CONNECTION
 import com.ruczajsoftware.workoutrival.util.ErrorHandling.Companion.ERROR_UNKNOWN
-import com.ruczajsoftware.workoutrival.util.Response
-import com.ruczajsoftware.workoutrival.util.ResponseType
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -96,8 +93,7 @@ abstract class NetworkBoundResource<ResponseObject, CacheObject, ViewStateType>
                 onErrorReturn(response.errorMessage, true, false)
             }
             is ApiEmptyResponse -> {
-                Log.e(TAG, "NetworkBoundResource: Request returned NOTHING (HTTP 204).")
-                onErrorReturn("HTTP 204. Returned NOTHING.", true, false)
+                handleApiSuccessResponse(ApiSuccessResponse<ResponseObject>(body = null))
             }
         }
     }
@@ -159,15 +155,20 @@ abstract class NetworkBoundResource<ResponseObject, CacheObject, ViewStateType>
 
     fun asLiveData() = result as LiveData<DataState<ViewStateType>>
 
-    abstract suspend fun createCacheRequestAndReturn()
 
-    abstract suspend fun handleApiSuccessResponse(response: ApiSuccessResponse<ResponseObject>)
+    open suspend fun handleApiSuccessResponse(response: ApiSuccessResponse<ResponseObject>) {}
 
-    abstract fun createCall(): LiveData<GenericApiResponse<ResponseObject>>
+    open fun createCall(): LiveData<GenericApiResponse<ResponseObject>> {
+        return AbsentLiveData.create()
+    }
 
-    abstract fun loadFromCache(): LiveData<ViewStateType>
+    open fun loadFromCache(): LiveData<ViewStateType> {
+        return AbsentLiveData.create()
+    }
 
-    abstract suspend fun updateLocalDb(cacheObject: CacheObject?)
+    open suspend fun updateLocalDb(cacheObject: CacheObject?) {}
+
+    open suspend fun createCacheRequestAndReturn() {}
 
     abstract fun setJob(job: Job)
 

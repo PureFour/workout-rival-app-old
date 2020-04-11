@@ -1,22 +1,24 @@
 package com.ruczajsoftware.workoutrival.data.network
 
 import androidx.lifecycle.LiveData
-import com.ruczajsoftware.workoutrival.data.model.LoginRequest
-import com.ruczajsoftware.workoutrival.data.model.RegisterRequest
-import com.ruczajsoftware.workoutrival.data.model.ServerStatus
 import com.ruczajsoftware.workoutrival.data.network.util.GenericApiResponse
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
+import com.ruczajsoftware.workoutrival.data.servicesModel.*
+import retrofit2.http.*
 
 interface ServicesApi {
 
     @GET("actuator/health")
     fun isServerAvailable(): LiveData<GenericApiResponse<ServerStatus>>
 
-    @POST("workoutRival/users/login")
-    fun login(@Body loginRequest: LoginRequest): LiveData<GenericApiResponse<Boolean>>
+    @POST("workoutRival/users/signIn")
+    fun login(@Body loginRequest: LoginRequest): LiveData<GenericApiResponse<AuthResponse>>
 
     @POST("workoutRival/users/signUp")
-    fun register(@Body registerRequest: RegisterRequest): LiveData<GenericApiResponse<String>>
+    fun register(@Body registerRequest: RegisterRequest): LiveData<GenericApiResponse<AuthResponse>>
+
+    @POST("workoutRival/users/resetPassword")
+    fun requestNewPin(@Query("email") email: String): LiveData<GenericApiResponse<Void>>
+
+    @PUT("workoutRival/users/password")
+    fun updatePassword(@Body updatePasswordRequest: UpdatePasswordRequest): LiveData<GenericApiResponse<Void>>
 }

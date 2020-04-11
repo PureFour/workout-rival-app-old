@@ -5,13 +5,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
-import com.ruczajsoftware.workoutrival.session.SessionManagerImpl
+import com.ruczajsoftware.workoutrival.session.SessionManager
 import com.ruczajsoftware.workoutrival.util.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
+import org.kodein.di.generic.instance
 
 
 abstract class BaseActivity : AppCompatActivity(), KodeinAware,
@@ -23,14 +24,13 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware,
 
     protected abstract val contentViewLayout: Int
 
-    var sessionManager: SessionManagerImpl = SessionManagerImpl()
+    val sessionManager by instance<SessionManager>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(contentViewLayout)
         afterViews()
     }
-
 
     override fun onUIMessageReceived(uiMessage: UIMessage) {
         when (uiMessage.uiMessageType) {
@@ -64,41 +64,12 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware,
                 it.error?.let { errorEvent ->
                     handleStateError(errorEvent)
                 }
-
-                it.data?.let {
-                    it.response?.let { responseEvent ->
-                        handleStateResponse(responseEvent)
-                    }
-                }
             }
         }
     }
 
-    abstract fun displayProgressBar(bool: Boolean)
+    abstract fun displayProgressBar(isVisible: Boolean)
 
-    private fun handleStateResponse(event: Event<Response>) {
-        event.getContentIfNotHandled()?.let {
-
-            when (it.responseType) {
-                is ResponseType.Toast -> {
-                    it.message?.let { message ->
-                        displayToast(message)
-                    }
-                }
-
-                is ResponseType.Dialog -> {
-                    it.message?.let { message ->
-                        displaySuccessDialog(message)
-                    }
-                }
-
-                is ResponseType.None -> {
-                    Log.i(TAG, "handleStateResponse: ${it.message}")
-                }
-            }
-
-        }
-    }
 
     private fun handleStateError(event: Event<StateError>) {
         event.getContentIfNotHandled()?.let {

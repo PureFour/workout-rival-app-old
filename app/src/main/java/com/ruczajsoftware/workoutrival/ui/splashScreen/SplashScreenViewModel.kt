@@ -1,8 +1,8 @@
 package com.ruczajsoftware.workoutrival.ui.splashScreen
 
 import androidx.lifecycle.LiveData
-import com.ruczajsoftware.workoutrival.data.model.ServerStatus
 import com.ruczajsoftware.workoutrival.data.repository.splashScreen.SplashScreenRepository
+import com.ruczajsoftware.workoutrival.data.servicesModel.ServerStatus
 import com.ruczajsoftware.workoutrival.ui.splashScreen.state.SplashScreenStateEvent
 import com.ruczajsoftware.workoutrival.ui.splashScreen.state.SplashScreenViewState
 import com.ruczajsoftware.workoutrival.util.DataState

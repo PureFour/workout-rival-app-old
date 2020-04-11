@@ -14,5 +14,15 @@ interface AuthRepository {
     ): LiveData<DataState<AuthViewState>>
 
     fun cancelActiveJobsOver()
-    fun isConnectedToTheInternet(): Boolean
+
+    fun checkPreviousAuthUser(): LiveData<DataState<AuthViewState>>
+
+    fun attemptRequestNewPin(email: String): LiveData<DataState<AuthViewState>>
+
+    fun attemptUpdatePassword(
+        email: String,
+        newPassword: String,
+        confirmPassword: String,
+        pin: String
+    ): LiveData<DataState<AuthViewState>>
 }

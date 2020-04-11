@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">WorkoutRival</string>
     <string name="app_slogan">Get your ass up!</string>
     <string name="log_in">Log In</string>
@@ -7,7 +8,12 @@
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm password</string>
-
+    <string name="request_new_pin">Request new pin</string>
+    <string name="pin">Pin</string>
+    <string name="new_password">New password</string>
+    <string name="reset_password">Reset password</string>
+    <string name="i_have_pin">I have pin</string>
+    <string name="forgot_password">Forgot Password?</string>
 
     <string name="are_you_sure">Are you sure?</string>
     <string name="text_info">Info</string>
@@ -16,5 +22,5 @@
     <string name="text_success">Success</string>
     <string name="text_ok">OK</string>
     <string name="text_cancel">Cancel</string>
-
+    <string name="do_you_want_exit">Do you want exit?</string>
 </resources>

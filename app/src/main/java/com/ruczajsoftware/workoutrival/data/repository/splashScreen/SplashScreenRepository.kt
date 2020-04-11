@@ -7,5 +7,4 @@ import com.ruczajsoftware.workoutrival.util.DataState
 interface SplashScreenRepository {
     fun checkServerAvailability(): LiveData<DataState<SplashScreenViewState>>
     fun cancelActiveJobsOver()
-    fun isConnectedToTheInternet(): Boolean
 }
